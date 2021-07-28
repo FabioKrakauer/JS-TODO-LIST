@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  server:
+    container_name: labneo-todo-server
+    env_file: ./server/.env
+    build:
+      context: ./server
+    ports:
+      - 5000:5000
+    volumes:
+      - ./server:/var/www/app
+    links:
+      - db
+  db:
+    container_name: labneo-todo-db
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - ./server/docker/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=todolist
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: labneo-todo-phpmyadmin
+    links:
+      - db
+    ports:
+      - 80:80
+    environment:
+      - PMA_ARBITRARY=1
