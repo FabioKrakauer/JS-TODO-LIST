@@ -21,7 +21,6 @@ services:
       - ./server/docker/mysql:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=todolist
-      - MYSQL_USER=root
       - MYSQL_PASSWORD=secret
       - MYSQL_ROOT_PASSWORD=secret
   phpmyadmin:
